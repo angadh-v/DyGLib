@@ -54,11 +54,41 @@ if __name__ == "__main__":
     new_node_test_neg_edge_sampler = NegativeEdgeSampler(src_node_ids=new_node_test_data.src_node_ids, dst_node_ids=new_node_test_data.dst_node_ids, seed=3)
 
     # get data loaders
-    train_idx_data_loader = get_idx_data_loader(indices_list=list(range(len(train_data.src_node_ids))), batch_size=args.batch_size, shuffle=False)
-    val_idx_data_loader = get_idx_data_loader(indices_list=list(range(len(val_data.src_node_ids))), batch_size=args.batch_size, shuffle=False)
-    new_node_val_idx_data_loader = get_idx_data_loader(indices_list=list(range(len(new_node_val_data.src_node_ids))), batch_size=args.batch_size, shuffle=False)
-    test_idx_data_loader = get_idx_data_loader(indices_list=list(range(len(test_data.src_node_ids))), batch_size=args.batch_size, shuffle=False)
-    new_node_test_idx_data_loader = get_idx_data_loader(indices_list=list(range(len(new_node_test_data.src_node_ids))), batch_size=args.batch_size, shuffle=False)
+    train_idx_data_loader = get_idx_data_loader(
+        indices_list=list(range(len(train_data.src_node_ids))),
+        time=train_data.node_interact_times,
+        batch_size=args.batch_size,
+        horizon=-1,
+        shuffle=False,
+    )
+    val_idx_data_loader = get_idx_data_loader(
+        indices_list=list(range(len(val_data.src_node_ids))),
+        time=val_data.node_interact_times,
+        batch_size=args.batch_size,
+        horizon=args.horizon,
+        shuffle=False,
+    )
+    new_node_val_idx_data_loader = get_idx_data_loader(
+        indices_list=list(range(len(new_node_val_data.src_node_ids))),
+        time=new_node_val_data.node_interact_times,
+        batch_size=args.batch_size,
+        horizon=args.horizon,
+        shuffle=False,
+    )
+    test_idx_data_loader = get_idx_data_loader(
+        indices_list=list(range(len(test_data.src_node_ids))),
+        time=test_data.node_interact_times,
+        batch_size=args.batch_size,
+        horizon=args.horizon,
+        shuffle=False,
+    )
+    new_node_test_idx_data_loader = get_idx_data_loader(
+        indices_list=list(range(len(new_node_test_data.src_node_ids))),
+        time=new_node_test_data.node_interact_times,
+        batch_size=args.batch_size,
+        horizon=args.horizon,
+        shuffle=False,
+    )
 
     val_metric_all_runs, new_node_val_metric_all_runs, test_metric_all_runs, new_node_test_metric_all_runs = [], [], [], []
 
