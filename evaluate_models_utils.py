@@ -9,6 +9,8 @@ import argparse
 import os
 import json
 
+from sklearn.metrics import average_precision_score, roc_auc_score
+
 from models.EdgeBank import edge_bank_link_prediction
 from utils.metrics import get_link_prediction_metrics, get_node_classification_metrics
 from utils.utils import set_random_seed
@@ -45,6 +47,7 @@ def evaluate_model_link_prediction(model_name: str, model: nn.Module, neighbor_s
     with torch.no_grad():
         # store evaluate losses and metrics
         evaluate_losses, evaluate_metrics = [], []
+        all_predicts, all_labels = [], []
         evaluate_idx_data_loader_tqdm = tqdm(evaluate_idx_data_loader, ncols=120)
         for batch_idx, evaluate_data_indices in enumerate(evaluate_idx_data_loader_tqdm):
             evaluate_data_indices = evaluate_data_indices.numpy()
@@ -150,6 +153,17 @@ def evaluate_model_link_prediction(model_name: str, model: nn.Module, neighbor_s
             evaluate_metrics.append(get_link_prediction_metrics(predicts=predicts, labels=labels))
 
             evaluate_idx_data_loader_tqdm.set_description(f'evaluate for the {batch_idx + 1}-th batch, evaluate loss: {loss.item()}')
+
+            all_predicts.append(predicts)
+            all_labels.append(labels)
+        
+        all_predicts = torch.cat(all_predicts, dim=0)
+        all_labels = torch.cat(all_labels, dim=0)
+        roc_auc = roc_auc_score(y_true=all_labels.cpu().numpy(), y_score=all_predicts.cpu().detach().numpy())
+        avg_prec = average_precision_score(y_true=all_labels.cpu().numpy(), y_score=all_predicts.cpu().detach().numpy())
+        for evaluate_metric in evaluate_metrics:
+            evaluate_metric['global_roc_auc'] = roc_auc
+            evaluate_metric['global_avg_prec'] = avg_prec
 
     return evaluate_losses, evaluate_metrics
 
@@ -304,6 +318,7 @@ def evaluate_edge_bank_link_prediction(args: argparse.Namespace, train_data: Dat
         test_neg_edge_sampler.reset_random_state()
 
         test_losses, test_metrics = [], []
+        all_predicts, all_labels = [], []
         test_idx_data_loader_tqdm = tqdm(test_idx_data_loader, ncols=120)
 
         for batch_idx, test_data_indices in enumerate(test_idx_data_loader_tqdm):
@@ -350,6 +365,17 @@ def evaluate_edge_bank_link_prediction(args: argparse.Namespace, train_data: Dat
             test_metrics.append(get_link_prediction_metrics(predicts=predicts, labels=labels))
 
             test_idx_data_loader_tqdm.set_description(f'test for the {batch_idx + 1}-th batch, test loss: {loss.item()}')
+
+            all_predicts.append(predicts)
+            all_labels.append(labels)
+        
+        all_predicts = torch.cat(all_predicts, dim=0)
+        all_labels = torch.cat(all_labels, dim=0)
+        roc_auc = roc_auc_score(y_true=all_labels.cpu().numpy(), y_score=all_predicts.cpu().detach().numpy())
+        avg_prec = average_precision_score(y_true=all_labels.cpu().numpy(), y_score=all_predicts.cpu().detach().numpy())
+        for evaluate_metric in test_metrics:
+            evaluate_metric['global_roc_auc'] = roc_auc
+            evaluate_metric['global_avg_prec'] = avg_prec
 
         # store the evaluation metrics at the current run
         test_metric_dict = {}
