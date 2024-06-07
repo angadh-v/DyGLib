@@ -25,12 +25,10 @@ class IterableSnapshotDataset(torch.utils.data.IterableDataset):
         return torch.where(mask)[0]
 
     def __iter__(self):
-        for i in range(
-            self.worker_id,
-            len(self),
-            self.num_workers,
-        ):
-            yield self[i]
+        for i in range(0, len(self), self.num_workers):
+            batch = self[i]
+            if len(batch) > 0:
+                yield batch
 
 
 class SnapshotLoader(torch.utils.data.DataLoader):
@@ -51,19 +49,16 @@ class SnapshotLoader(torch.utils.data.DataLoader):
         **kwargs,
     ):
 
-        iterable_dataset = IterableSnapshotDataset(time=time, horizon=horizon)
+        kwargs.pop("shuffle", None)
+        # Only works with a single worker, otherwise the order of the events would be wrong
+        kwargs.pop("num_workers", None)
 
-        def worker_init_fn(worker_id):
-            worker_info = torch.utils.data.get_worker_info()
-            dataset = worker_info.dataset
-            dataset.num_workers = worker_info.num_workers
-            dataset.worker_id = worker_id
+        iterable_dataset = IterableSnapshotDataset(time=time, horizon=horizon)
 
         super().__init__(
             iterable_dataset,
             batch_size=None,
             shuffle=False,
-            worker_init_fn=worker_init_fn,
             **kwargs,
         )
 

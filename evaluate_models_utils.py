@@ -282,7 +282,7 @@ def evaluate_edge_bank_link_prediction(args: argparse.Namespace, train_data: Dat
         set_random_seed(seed=run)
 
         args.seed = run
-        args.save_result_name = f'{args.negative_sample_strategy}_negative_sampling_{args.model_name}_seed{args.seed}'
+        args.save_result_name = f'{args.negative_sample_strategy}_negative_sampling_{args.model_name}_seed{args.seed}_horizon{args.horizon}'
 
         # set up logger
         logging.basicConfig(level=logging.INFO)

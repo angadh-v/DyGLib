@@ -101,7 +101,7 @@ if __name__ == "__main__":
 
             args.seed = run
             args.load_model_name = f'{args.model_name}_seed{args.seed}'
-            args.save_result_name = f'{args.negative_sample_strategy}_negative_sampling_{args.model_name}_seed{args.seed}'
+            args.save_result_name = f'{args.negative_sample_strategy}_negative_sampling_{args.model_name}_seed{args.seed}_horizon{args.horizon}'
 
             # set up logger
             logging.basicConfig(level=logging.INFO)
