@@ -100,7 +100,7 @@ if __name__ == "__main__":
             set_random_seed(seed=run)
 
             args.seed = run
-            args.load_model_name = f'{args.model_name}_seed{args.seed}'
+            args.load_model_name = f'{args.model_name}_seed{args.seed}_horizon{3600}'
             args.save_result_name = f'{args.negative_sample_strategy}_negative_sampling_{args.model_name}_seed{args.seed}_horizon{args.horizon}'
 
             # set up logger
@@ -290,7 +290,7 @@ if __name__ == "__main__":
                 }
             result_json = json.dumps(result_json, indent=4)
 
-            save_result_folder = f"./saved_results/{args.model_name}/{args.dataset_name}/fixed-batch"
+            save_result_folder = f"./saved_results/{args.model_name}/{args.dataset_name}/time-window"
             os.makedirs(save_result_folder, exist_ok=True)
             save_result_path = os.path.join(save_result_folder, f"{args.save_result_name}.json")
             with open(save_result_path, 'w') as file:
