@@ -216,7 +216,7 @@ def get_link_prediction_data(dataset_name: str, val_ratio: float, test_ratio: fl
     )
     # sample nodes which we keep as new nodes (to test inductiveness), so then we have to remove all their edges from training
     new_test_node_set = set(
-        random.sample(test_node_set, int(0.1 * num_total_unique_node_ids))
+        random.sample(list(test_node_set), int(0.1 * num_total_unique_node_ids))
     )
 
     # mask for each source and destination to denote whether they are new test nodes

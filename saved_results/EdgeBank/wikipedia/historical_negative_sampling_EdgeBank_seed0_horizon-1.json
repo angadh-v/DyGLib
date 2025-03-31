@@ -1,0 +1,8 @@
+{
+    "test metrics": {
+        "average_precision": "0.7309",
+        "roc_auc": "0.7710",
+        "global_roc_auc": "0.7711",
+        "global_avg_prec": "0.7303"
+    }
+}
