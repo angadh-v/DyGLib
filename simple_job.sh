@@ -5,5 +5,5 @@
 #SBATCH --time=0-30:00
 
 source ~/py37/bin/activate
-cd ~/DyGLib
+cd ~/scratch/DyGLib
 bash run_experiments.sh

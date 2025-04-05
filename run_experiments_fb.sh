@@ -5,7 +5,7 @@ GPU="0"
 datasets=("wikipedia 3600")
 # Specify models
 # models=("JODIE" "DyRep" "EdgeBank" "DyGFormer")
-models=("EdgeBank")
+models=("EdgeBank" "DyGFormer" "TCL" "TGAT")
 # Run experiments for each dataset with corresponding horizon and model
 for model in "${models[@]}"
 do
@@ -23,6 +23,6 @@ do
         # Evaluate model on link prediction
         python evaluate_link_prediction.py --dataset_name ${dataset_array[0]} --model_name $model --patience 5 --load_best_configs --num_runs 5 --gpu $GPU --negative_sample_strategy "historical"
         # Evaluate model on link forecasting
-        python evaluate_link_prediction.py --dataset_name ${dataset_array[0]} --model_name $model --patience 5 --load_best_configs --num_runs 5 --gpu $GPU --negative_sample_strategy "historical" --horizon ${dataset_array[1]}
+        python evaluate_link_prediction_time_window.py --dataset_name ${dataset_array[0]} --model_name $model --patience 5 --load_best_configs --num_runs 5 --gpu $GPU --negative_sample_strategy "historical" --horizon ${dataset_array[1]}
     done
 done

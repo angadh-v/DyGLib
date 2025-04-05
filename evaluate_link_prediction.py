@@ -62,28 +62,28 @@ if __name__ == "__main__":
         indices_list=list(range(len(val_data.src_node_ids))),
         time=val_data.node_interact_times,
         batch_size=args.batch_size,
-        horizon=args.horizon,
+        horizon=-1,
         shuffle=False,
     )
     new_node_val_idx_data_loader = get_idx_data_loader(
         indices_list=list(range(len(new_node_val_data.src_node_ids))),
         time=new_node_val_data.node_interact_times,
         batch_size=args.batch_size,
-        horizon=args.horizon,
+        horizon=-1,
         shuffle=False,
     )
     test_idx_data_loader = get_idx_data_loader(
         indices_list=list(range(len(test_data.src_node_ids))),
         time=test_data.node_interact_times,
         batch_size=args.batch_size,
-        horizon=args.horizon,
+        horizon=-1,
         shuffle=False,
     )
     new_node_test_idx_data_loader = get_idx_data_loader(
         indices_list=list(range(len(new_node_test_data.src_node_ids))),
         time=new_node_test_data.node_interact_times,
         batch_size=args.batch_size,
-        horizon=args.horizon,
+        horizon=-1,
         shuffle=False,
     )
 
