@@ -2,7 +2,6 @@
 
 GPU="0"
 # Specify datasets with time horizon
-# datasets=("wikipedia 3600" "reddit 900" "mooc 1200" "lastfm 21600" "myket 5400" "enron 172800" "SocialEvo 1800" "uci 57600" "Flights 1" "CanParl 1" "USLegis 1" "UNtrade 1" "UNvote 1" "Contacts 1")
 datasets=("wikipedia 3600")
 # Specify models
 # models=("JODIE" "DyRep" "EdgeBank" "DyGFormer")
