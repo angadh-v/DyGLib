@@ -1,5 +1,9 @@
+This respository contains the code for the paper Time-Window Based Training for Temporal Graph Neural Networks (https://www.researchgate.net/publication/391202319_Time-Window_Based_Training_for_Temporal_Graph_Neural_Networks). 
+We modified the DyGLib library's Dataloader class to use a novel batching technique. This project investigates whether training with time-windows, asopposed to traditional batch-based training, can better capture thetemporal dependencies in dynamic graph data. We aim to study theimpact of this novel training approach on the learning dynamicsof state-of-the-art Temporal Graph Neural Networks (TGNNs). Weconduct comprehensive experiments across multiple models anddatasets to evaluate the effectiveness of this method. Additionally,we perform an ablation study on time-window size, analyzing itsimpact on computational efficiency and information retention. 
+
+---- Here is the README for the original DyGLib repo
 # Towards Better Dynamic Graph Learning: New Architecture and Unified Library
-This repository is built for the paper [Towards Better Dynamic Graph Learning: New Architecture and Unified Library](https://arxiv.org/abs/2303.13047).
+This repository was built for the paper [Towards Better Dynamic Graph Learning: New Architecture and Unified Library](https://arxiv.org/abs/2303.13047).
 
 🔔 If you have any questions or suggestions, please feel free to let us know. 
 You can directly email [Le Yu](https://yule-buaa.github.io/) using the email address yule@buaa.edu.cn or post an issue on this repository.
